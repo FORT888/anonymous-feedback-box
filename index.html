@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📧 联信资匿名意见箱</title>
+  <title>📧 联信资匿名意见箱 📧</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
@@ -12,16 +12,17 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
     .container {
       background-color: #fff;
-      padding: 30px;
+      padding: 30px 25px;
       border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
       width: 100%;
-      max-width: 520px;
+      max-width: 600px;
       animation: fadeIn 0.8s ease;
     }
     @keyframes fadeIn {
@@ -31,69 +32,82 @@
     h2 {
       text-align: center;
       color: #007bff;
-      margin-bottom: 20px;
-      font-size: 24px;
+      margin-bottom: 25px;
+      font-size: 30px;
+      letter-spacing: 1px;
+      font-weight: 700;
     }
     label {
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
       display: block;
+      font-size: 16px;
     }
     select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
-      margin-top: 5px;
-      font-size: 14px;
+      border-radius: 8px;
+      margin-top: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
     }
     textarea {
       resize: none;
-      height: 120px;
+      height: 130px;
+      line-height: 1.6;
     }
-    /* 上传按钮美化 */
-    .upload-btn {
-      display: inline-block;
-      background-color: #f0f4ff;
-      border: 2px dashed #007bff;
-      border-radius: 8px;
-      color: #007bff;
-      padding: 12px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      margin-top: 8px;
-      width: 100%;
-    }
-    .upload-btn:hover {
-      background-color: #007bff;
-      color: #fff;
-      border-style: solid;
-    }
+    /* 上传按钮样式（简洁版） */
     input[type="file"] {
-      display: none;
+      display: block;
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 6px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    input[type="file"]::-webkit-file-upload-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    input[type="file"]::-webkit-file-upload-button:hover {
+      background-color: #0056b3;
     }
     button {
       width: 100%;
       background-color: #007bff;
       color: #fff;
       border: none;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 6px;
+      padding: 15px;
+      font-size: 18px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 15px;
-      transition: background-color 0.3s;
+      margin-top: 20px;
+      transition: all 0.3s;
+      font-weight: 600;
     }
     button:hover {
       background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 600px) {
+      h2 { font-size: 26px; }
+      .container { padding: 25px 20px; }
+      select, textarea, input[type="file"], button { font-size: 16px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>📧 联信资匿名意见箱</h2>
+    <h2>📧 联信资匿名意见箱 📧</h2>
     <form id="feedbackForm">
       <label for="category">意见内容分类：</label>
       <select id="category" required>
@@ -108,7 +122,6 @@
       <textarea id="message" placeholder="请输入您宝贵的意见及建议，我们会及时进行整改和查证处理" required></textarea>
 
       <label for="image">上传图片（可选）：</label>
-      <label for="image" class="upload-btn">📷 点击选择图片</label>
       <input type="file" id="image" accept="image/*">
 
       <button type="submit">提交匿名意见</button>
@@ -178,5 +191,3 @@
   </script>
 </body>
 </html>
-
-
