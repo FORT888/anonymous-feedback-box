@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>联信资匿名意见箱</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
@@ -13,12 +13,14 @@
     html, body {
       margin: 0;
       height: 100%;
-      overflow: hidden; /* 🚫 禁止滚动 */
+      overflow: hidden; /* 🚫 禁止滚动条 */
+      touch-action: none; /* 🚫 禁止触摸滑动 */
       font-family: "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
       background: radial-gradient(circle at 30% 30%, #f6f8fb, #dfe3eb);
       display: flex;
       justify-content: center;
       align-items: center;
+      -webkit-overflow-scrolling: none;
     }
 
     .container {
@@ -32,6 +34,8 @@
         0 4px 12px rgba(0, 0, 0, 0.04);
       text-align: center;
       animation: fadeIn 0.8s ease-out;
+      max-height: 90vh; /* 防止手机键盘顶起 */
+      overflow: hidden;
     }
 
     @keyframes fadeIn {
@@ -40,11 +44,11 @@
     }
 
     h2 {
-      font-size: 28px;
+      font-size: 26px;
       color: #0d47a1;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
     }
 
     h2::after {
@@ -53,15 +57,15 @@
       width: 60px;
       height: 3px;
       background: linear-gradient(90deg, #007bff, #00b4ff);
-      margin: 12px auto 0;
+      margin: 10px auto 0;
       border-radius: 2px;
     }
 
     label {
       display: block;
       text-align: left;
-      margin-top: 18px;
-      font-size: 16px;
+      margin-top: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: #333;
     }
@@ -70,8 +74,8 @@
       width: 100%;
       border: 1px solid #d0d7e2;
       border-radius: 10px;
-      padding: 13px 14px;
-      margin-top: 8px;
+      padding: 12px 13px;
+      margin-top: 6px;
       font-size: 15px;
       background-color: #fafbfc;
       transition: all 0.2s ease;
@@ -86,7 +90,7 @@
 
     textarea {
       resize: none;
-      height: 140px;
+      height: 120px;
       line-height: 1.6;
     }
 
@@ -111,10 +115,10 @@
     }
 
     button {
-      margin-top: 28px;
+      margin-top: 22px;
       width: 100%;
-      padding: 15px;
-      font-size: 17px;
+      padding: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: #fff;
       border: none;
@@ -132,26 +136,34 @@
     }
 
     footer {
-      margin-top: 25px;
+      margin-top: 18px;
       text-align: center;
       color: #777;
-      font-size: 13px;
+      font-size: 12px;
       border-top: 1px solid #eee;
-      padding-top: 15px;
+      padding-top: 10px;
     }
 
     @media (max-width: 600px) {
       .container {
-        padding: 32px 25px;
+        padding: 28px 22px;
+        border-radius: 14px;
       }
+
       h2 {
-        font-size: 24px;
+        font-size: 22px;
       }
+
       label {
-        font-size: 15px;
+        font-size: 14px;
       }
+
       select, textarea, input[type="file"], button {
-        font-size: 15px;
+        font-size: 14px;
+      }
+
+      footer {
+        font-size: 11px;
       }
     }
   </style>
@@ -182,6 +194,11 @@
   </div>
 
   <script>
+    // 禁止页面滚动（针对移动端触摸）
+    document.body.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+    }, { passive: false });
+
     (function() {
       emailjs.init('Vf3g58_uwsuIfMxCI');
     })();
@@ -244,5 +261,3 @@
   </script>
 </body>
 </html>
-
-
