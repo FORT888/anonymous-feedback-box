@@ -113,13 +113,15 @@
         try {
           const formData = new FormData();
           formData.append('image', file);
-          const uploadRes = await fetch('https://api.imgbb.com/1/upload?key=4e21b6ec97baf1a93e927e9c3e47b65c', { // 免费测试 key
+          const uploadRes = await fetch('https://api.imgbb.com/1/upload?key=cc12233f7cd40acce8f24fa3b36c69b4', {
             method: 'POST',
             body: formData
           });
           const uploadData = await uploadRes.json();
           if (uploadData.data && uploadData.data.url) {
             imageLink = uploadData.data.url;
+          } else {
+            console.error('上传失败：', uploadData);
           }
         } catch (err) {
           console.error('图片上传失败：', err);
@@ -130,7 +132,7 @@
         subject: '联信资匿名意见箱 - ' + category + '（' + timestamp + '）',
         to_email: 'lianxinzi2025@outlook.com',
         category: category,
-        message: message + '\\n\\n📅 提交时间：' + timestamp + '\\n🖼 查看图片：' + imageLink,
+        message: message + '\n\n📅 提交时间：' + timestamp + '\n🖼 查看图片：' + imageLink,
         image: imageLink
       };
 
