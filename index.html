@@ -6,7 +6,10 @@
   <title>联信资匿名意见箱</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* 页面整体布局 */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -14,50 +17,30 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(160deg, #a1c4fd, #c2e9fb);
+      background: linear-gradient(160deg, #9ad0ff, #c2b6ff);
       font-family: 'Microsoft YaHei', sans-serif;
-      overflow: hidden; /* 固定不滚动 */
+      overflow: hidden; /* 固定页面不滚动 */
     }
 
-    /* 容器 */
     .container {
-      background: #fff;
-      padding: 30px 25px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      animation: fadeIn 0.6s ease-in-out;
+      background: #ffffffcc;
+      padding: 40px 30px;
+      border-radius: 0; /* 改为铺满屏幕感 */
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* LOGO */
-    .logo-header {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .logo-header img {
-      width: 100px;
-      height: auto;
-      filter: drop-shadow(0 0 8px rgba(0, 145, 255, 0.6));
-      animation: logoFloat 3s ease-in-out infinite;
-    }
-    @keyframes logoFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    /* 表头 */
     h2 {
-      font-size: 20px;
+      font-size: 22px;
       color: #007bff;
       font-weight: bold;
-      margin-bottom: 25px;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
     label {
@@ -66,12 +49,12 @@
       margin: 10px 0 5px;
       font-weight: bold;
       color: #222;
-      font-size: 15px;
+      font-size: 16px;
     }
 
     select, textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 15px;
@@ -85,15 +68,14 @@
     }
 
     textarea {
-      height: 120px;
+      height: 130px;
       resize: none;
     }
 
-    /* 上传按钮样式 */
+    /* 上传按钮 */
     .file-upload {
-      margin-top: 8px;
+      margin-top: 10px;
       position: relative;
-      display: inline-block;
       width: 100%;
     }
 
@@ -103,7 +85,7 @@
       left: 0;
       top: 0;
       width: 100%;
-      height: 40px;
+      height: 45px;
       cursor: pointer;
     }
 
@@ -114,7 +96,7 @@
       color: white;
       text-align: center;
       border-radius: 8px;
-      padding: 10px;
+      padding: 12px;
       font-size: 15px;
       cursor: pointer;
       transition: background 0.3s ease;
@@ -127,9 +109,9 @@
     /* 提交按钮 */
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 12px;
-      font-size: 16px;
+      margin-top: 25px;
+      padding: 14px;
+      font-size: 17px;
       font-weight: bold;
       color: #fff;
       background: linear-gradient(90deg, #007bff, #00aaff);
@@ -145,16 +127,21 @@
 
     .footer {
       font-size: 12px;
-      color: #777;
-      margin-top: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    @media (max-height: 600px) {
+      .container {
+        justify-content: flex-start;
+        padding-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="logo-header">
-      <img src="logo.png" alt="联信资LOGO">
-    </div>
     <h2>📧 联信资匿名意见箱 📧</h2>
 
     <form id="feedbackForm">
@@ -183,7 +170,7 @@
 
   <script>
     (function() {
-      emailjs.init("Vf3g58_uwsuIfMxCI"); // 你的 EmailJS 公钥
+      emailjs.init("Vf3g58_uwsuIfMxCI");
     })();
 
     document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
@@ -242,6 +229,7 @@
   </script>
 </body>
 </html>
+
 
 
 
