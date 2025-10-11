@@ -76,7 +76,7 @@
       <label for="message">意见内容：</label>
       <textarea id="message" placeholder="请输入您的意见或建议..." required></textarea>
 
-      <label for="image">上传图片（可选，最大5MB）：</label>
+      <label for="image">上传图片（可选）：</label>
       <input type="file" id="image" accept="image/*">
 
       <button type="submit">提交匿名意见</button>
@@ -85,56 +85,67 @@
 
   <script>
     (function() {
-      emailjs.init('Vf3g58_uwsuIfMxCI'); // 你的 EmailJS Public Key
+      emailjs.init('Vf3g58_uwsuIfMxCI'); // 你的 EmailJS 公钥
     })();
 
-    document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+    document.getElementById('feedbackForm').addEventListener('submit', async function(event) {
       event.preventDefault();
 
       const category = document.getElementById('category').value;
       const message = document.getElementById('message').value.trim();
       const imageInput = document.getElementById('image');
       const timestamp = new Date().toLocaleString();
+      let imageLink = '未上传图片';
 
       if (!message) {
         alert('请填写意见内容！');
         return;
       }
 
+      // 如果有图片，则上传到 imgbb 匿名图床
       if (imageInput.files.length > 0) {
         const file = imageInput.files[0];
-        if (file.size > 5 * 1024 * 1024) {
-          alert('图片大小超过 5MB，请选择更小的图片！');
+        if (file.size > 10 * 1024 * 1024) {
+          alert('图片大小不能超过 10MB！');
           return;
         }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          sendEmail(category, message, e.target.result, timestamp);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        sendEmail(category, message, null, timestamp);
-      }
-    });
 
-    function sendEmail(category, message, imageBase64, timestamp) {
+        try {
+          const formData = new FormData();
+          formData.append('image', file);
+          const uploadRes = await fetch('https://api.imgbb.com/1/upload?key=cc12233f7cd40acce8f24fa3b36c69b4', {
+            method: 'POST',
+            body: formData
+          });
+          const uploadData = await uploadRes.json();
+          if (uploadData.data && uploadData.data.url) {
+            imageLink = uploadData.data.url;
+          } else {
+            console.error('上传失败：', uploadData);
+          }
+        } catch (err) {
+          console.error('图片上传失败：', err);
+        }
+      }
+
       const templateParams = {
         subject: '联信资匿名意见箱 - ' + category + '（' + timestamp + '）',
         to_email: 'lianxinzi2025@outlook.com',
         category: category,
-        message: message + '\\n\\n📅 提交时间：' + timestamp,
-        image: imageBase64 || ''
+        message: message + '\n\n📅 提交时间：' + timestamp + '\n🖼 查看图片：' + imageLink,
+        image: imageLink
       };
 
       emailjs.send('service_0nbyy1m', 'template_la7d6sb', templateParams)
-        .then(function() {
+        .then(() => {
           alert('✅ 感谢您的匿名反馈，我们已收到！');
           document.getElementById('feedbackForm').reset();
-        }, function(error) {
+        })
+        .catch(error => {
           alert('❌ 发送失败，请稍后再试。');
           console.error('EmailJS 错误：', error);
         });
-    }
+    });
   </script>
 </body>
 </html>
