@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>📧 联信资匿名意见箱 📧</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联信资匿名意见箱</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    html, body {
-      height: 100%;
+    /* 页面整体布局 */
+    body {
       margin: 0;
-      font-family: 'Microsoft YaHei', Arial, sans-serif;
-      overflow: hidden; /* 禁止滚动 */
-      background: linear-gradient(180deg, #6faeff, #8c97ff, #b58aff);
+      padding: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: linear-gradient(160deg, #a1c4fd, #c2e9fb);
+      font-family: 'Microsoft YaHei', sans-serif;
+      overflow: hidden; /* 固定不滚动 */
     }
 
+    /* 容器 */
     .container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(14px);
-      border-radius: 26px;
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 20px;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      padding: 35px 35px 45px;
-      max-width: 520px;
       width: 90%;
-      animation: fadeIn 0.8s ease-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -37,145 +36,125 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* LOGO */
     .logo-header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
-
     .logo-header img {
-      width: 80px;
+      width: 100px;
       height: auto;
-      margin-bottom: 8px;
+      filter: drop-shadow(0 0 8px rgba(0, 145, 255, 0.6));
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
     }
 
-    .logo-header h1 {
-      margin: 0;
-      color: #0056b3;
-      font-size: 22px;
-      letter-spacing: 1px;
-      font-weight: 700;
-    }
-
-    .logo-header p {
-      margin: 2px 0 0;
-      font-size: 13px;
-      color: rgba(0, 0, 0, 0.6);
-    }
-
+    /* 表头 */
     h2 {
-      text-align: center;
+      font-size: 20px;
       color: #007bff;
-      margin: 10px 0 25px;
-      font-size: 24px;
-      font-weight: 800;
-    }
-
-    form {
-      width: 100%;
+      font-weight: bold;
+      margin-bottom: 25px;
     }
 
     label {
       display: block;
-      margin-top: 14px;
+      text-align: left;
+      margin: 10px 0 5px;
       font-weight: bold;
       color: #222;
-      font-size: 16px;
+      font-size: 15px;
     }
 
-    select, textarea, input[type="file"] {
+    select, textarea {
       width: 100%;
+      padding: 10px;
+      border-radius: 8px;
       border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 12px;
-      margin-top: 8px;
       font-size: 15px;
-      background: #f9fafc;
-      box-sizing: border-box;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    select:focus, textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
     }
 
     textarea {
+      height: 120px;
       resize: none;
-      height: 110px;
-      line-height: 1.5;
     }
 
-    input[type="file"] {
+    /* 上传按钮样式 */
+    .file-upload {
+      margin-top: 8px;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-upload input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 40px;
       cursor: pointer;
-      font-size: 14px;
     }
 
-    input[type="file"]::-webkit-file-upload-button {
-      background-color: #007bff;
+    .upload-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, #007bff, #00b4ff);
+      color: white;
+      text-align: center;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .upload-btn:hover {
+      background: linear-gradient(90deg, #0056b3, #0094ff);
+    }
+
+    /* 提交按钮 */
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
       color: #fff;
+      background: linear-gradient(90deg, #007bff, #00aaff);
       border: none;
-      padding: 8px 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
-      font-size: 14px;
-    }
-
-    input[type="file"]::-webkit-file-upload-button:hover {
-      background-color: #0056b3;
-    }
-
-    button {
-      margin-top: 25px;
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(90deg, #007bff, #00a2ff);
-      border: none;
-      color: white;
-      font-size: 17px;
-      font-weight: 700;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 3px 12px rgba(0, 123, 255, 0.3);
+      transition: background 0.3s ease;
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+      background: linear-gradient(90deg, #0056b3, #0094ff);
     }
 
-    footer {
-      margin-top: 20px;
-      text-align: center;
-      color: #555;
-      font-size: 13px;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        width: 92%;
-        padding: 28px 20px 35px;
-      }
-      .logo-header img {
-        width: 65px;
-      }
-      h2 {
-        font-size: 22px;
-        margin-bottom: 20px;
-      }
-      label {
-        font-size: 15px;
-      }
-      select, textarea, input[type="file"], button {
-        font-size: 15px;
-      }
+    .footer {
+      font-size: 12px;
+      color: #777;
+      margin-top: 12px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- LOGO 标题区 -->
     <div class="logo-header">
       <img src="logo.png" alt="联信资LOGO">
-      <h1>聯信資</h1>
-      <p>Trust Union Limited</p>
     </div>
-
     <h2>📧 联信资匿名意见箱 📧</h2>
 
     <form id="feedbackForm">
@@ -189,48 +168,50 @@
       </select>
 
       <label for="message">意见内容：</label>
-      <textarea id="message" placeholder="请输入您宝贵的意见及建议，我们会及时进行整改和查证处理" required></textarea>
+      <textarea id="message" placeholder="请输入您宝贵的意见及建议，我们会及时进行整改和查证处理..." required></textarea>
 
-      <label for="image">上传图片（可选）：</label>
-      <input type="file" id="image" accept="image/*">
+      <label>上传图片（可选）：</label>
+      <div class="file-upload">
+        <div class="upload-btn">📎 选择图片文件</div>
+        <input type="file" id="image" accept="image/*">
+      </div>
 
       <button type="submit">提交匿名意见</button>
+      <p class="footer">您的意见将被严格保密，仅用于改进与优化工作。</p>
     </form>
-
-    <footer>您的意见将被严格保密，仅用于改进与优化工作。</footer>
   </div>
 
   <script>
     (function() {
-      emailjs.init('Vf3g58_uwsuIfMxCI');
+      emailjs.init("Vf3g58_uwsuIfMxCI"); // 你的 EmailJS 公钥
     })();
 
-    document.getElementById('feedbackForm').addEventListener('submit', async function(event) {
+    document.getElementById("feedbackForm").addEventListener("submit", async function(event) {
       event.preventDefault();
 
-      const category = document.getElementById('category').value;
-      const message = document.getElementById('message').value.trim();
-      const imageInput = document.getElementById('image');
+      const category = document.getElementById("category").value;
+      const message = document.getElementById("message").value.trim();
+      const imageInput = document.getElementById("image");
       const timestamp = new Date().toLocaleString();
-      let imageLink = '未上传图片';
+      let imageLink = "未上传图片";
 
       if (!message) {
-        alert('请填写意见内容！');
+        alert("请填写意见内容！");
         return;
       }
 
       if (imageInput.files.length > 0) {
         const file = imageInput.files[0];
         if (file.size > 10 * 1024 * 1024) {
-          alert('图片大小不能超过 10MB！');
+          alert("图片大小不能超过 10MB！");
           return;
         }
 
         try {
           const formData = new FormData();
-          formData.append('image', file);
-          const uploadRes = await fetch('https://api.imgbb.com/1/upload?key=cc12233f7cd40acce8f24fa3b36c69b4', {
-            method: 'POST',
+          formData.append("image", file);
+          const uploadRes = await fetch("https://api.imgbb.com/1/upload?key=cc12233f7cd40acce8f24fa3b36c69b4", {
+            method: "POST",
             body: formData
           });
           const uploadData = await uploadRes.json();
@@ -238,30 +219,29 @@
             imageLink = uploadData.data.url;
           }
         } catch (err) {
-          console.error('图片上传失败：', err);
+          console.error("图片上传失败：", err);
         }
       }
 
       const templateParams = {
-        subject: '联信资匿名意见箱 - ' + category + '（' + timestamp + '）',
-        to_email: 'lianxinzi2025@outlook.com',
         category: category,
-        message: message + '\n\n📅 提交时间：' + timestamp + '\n🖼 查看图片：' + imageLink,
+        message: message + "\n\n📅 提交时间：" + timestamp + "\n🖼 图片链接：" + imageLink,
         image: imageLink
       };
 
-      emailjs.send('service_0nbyy1m', 'template_la7d6sb', templateParams)
+      emailjs.send("service_0nbyy1m", "template_la7d6sb", templateParams)
         .then(() => {
-          alert('✅ 感谢您的匿名反馈，我们已收到！');
-          document.getElementById('feedbackForm').reset();
+          alert("✅ 感谢您的匿名反馈，我们已收到！");
+          document.getElementById("feedbackForm").reset();
         })
         .catch(error => {
-          alert('❌ 发送失败，请稍后再试。');
-          console.error('EmailJS 错误：', error);
+          alert("❌ 发送失败，请稍后再试。");
+          console.error("EmailJS 错误：", error);
         });
     });
   </script>
 </body>
 </html>
+
 
 
