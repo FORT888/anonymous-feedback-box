@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>📧 联信资匿名意见箱 📧</title>
+  <title>💬 联信资匿名意见箱 💬</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <style>
@@ -14,22 +14,24 @@
     html, body {
       margin: 0;
       height: 100%;
-      overflow: hidden; /* 🚫 禁止滚动 */
-      touch-action: none; /* 🚫 禁止触摸滑动 */
+      overflow: hidden;
       font-family: "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg, #dce9ff 0%, #f0e6ff 50%, #fff3e0 100%);
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 40%, #415a77 100%);
       display: flex;
       justify-content: center;
       align-items: center;
+      color: #e0e6ed;
     }
 
     .container {
-      background: rgba(255, 255, 255, 0.96);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
       border-radius: 20px;
       padding: 45px 40px;
       width: 90%;
       max-width: 520px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
       text-align: center;
       animation: fadeIn 0.8s ease-out;
     }
@@ -41,10 +43,11 @@
 
     h2 {
       font-size: 28px;
-      color: #0d47a1;
+      color: #61dafb;
       font-weight: 800;
       letter-spacing: 1px;
       margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
     }
 
     label {
@@ -53,25 +56,26 @@
       margin-top: 18px;
       font-size: 16px;
       font-weight: 600;
-      color: #222;
+      color: #cfd8dc;
     }
 
     select, textarea, input[type="file"] {
       width: 100%;
-      border: 1px solid #d0d7e2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       padding: 14px;
       margin-top: 6px;
       font-size: 15px;
-      background-color: #f9fafc;
-      transition: 0.3s;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transition: all 0.3s ease;
     }
 
     select:focus, textarea:focus, input[type="file"]:focus {
       outline: none;
-      border-color: #007bff;
-      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-      background-color: #fff;
+      border-color: #61dafb;
+      box-shadow: 0 0 12px rgba(97, 218, 251, 0.4);
+      background-color: rgba(255, 255, 255, 0.12);
     }
 
     textarea {
@@ -81,8 +85,8 @@
     }
 
     input[type="file"]::-webkit-file-upload-button {
-      background-color: #007bff;
-      color: #fff;
+      background-color: #61dafb;
+      color: #0d1b2a;
       border: none;
       padding: 9px 16px;
       border-radius: 8px;
@@ -92,7 +96,7 @@
     }
 
     input[type="file"]::-webkit-file-upload-button:hover {
-      background-color: #0056b3;
+      background-color: #90e0ef;
     }
 
     button {
@@ -104,24 +108,24 @@
       color: #fff;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(90deg, #007bff, #0066cc);
+      background: linear-gradient(90deg, #00b4d8, #0077b6);
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 183, 255, 0.4);
     }
 
     button:hover {
-      background: linear-gradient(90deg, #0059b3, #004c99);
+      background: linear-gradient(90deg, #48cae4, #0096c7);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+      box-shadow: 0 6px 20px rgba(0, 183, 255, 0.6);
     }
 
     footer {
       margin-top: 22px;
       text-align: center;
-      color: #666;
+      color: #b0bec5;
       font-size: 13px;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding-top: 12px;
     }
 
@@ -137,7 +141,7 @@
 
 <body>
   <div class="container">
-    <h2>📧 联信资匿名意见箱 📧</h2>
+    <h2>💬 联信资匿名意见箱 💬</h2>
     <form id="feedbackForm">
       <label for="category">意见内容分类：</label>
       <select id="category" required>
@@ -149,7 +153,7 @@
       </select>
 
       <label for="message">意见内容：</label>
-      <textarea id="message" placeholder="请输入您宝贵的意见及建议，我们会及时进行整改和查证处理" required></textarea>
+      <textarea id="message" placeholder="请输入您的宝贵意见与建议..." required></textarea>
 
       <label for="image">上传图片（可选）：</label>
       <input type="file" id="image" accept="image/*">
@@ -201,10 +205,9 @@
         }
       }
 
-      // ✅ 修正版 — 只传 EmailJS 模板定义的变量
       const templateParams = {
         category: category,
-        message: message + '\n\n📅 提交时间：' + timestamp + '\n🖼 查看图片：' + imageLink,
+        message: message + '\n\n📅 提交时间：' + timestamp + '\n🖼 图片：' + imageLink,
         image: imageLink
       };
 
