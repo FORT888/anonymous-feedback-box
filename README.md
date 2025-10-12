@@ -149,7 +149,7 @@
         <option value="团队协作">团队协作</option>
         <option value="线下办事处意见">线下办事处意见</option>
         <option value="福利制度">福利制度</option>
-        <option value="其他">其他</option>
+        <option value="其他匿名举报">其他匿名举报</option>
       </select>
 
       <label for="message">意见内容：</label>
