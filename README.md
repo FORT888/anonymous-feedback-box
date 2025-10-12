@@ -147,8 +147,8 @@
       <select id="category" required>
         <option value="公司管理">公司管理</option>
         <option value="团队协作">团队协作</option>
-        <option value="线下办事处意见">线下办事处意见</option>
         <option value="福利制度">福利制度</option>
+        <option value="线下办事处意见">线下办事处意见</option>
         <option value="其他匿名举报">其他匿名举报</option>
       </select>
 
